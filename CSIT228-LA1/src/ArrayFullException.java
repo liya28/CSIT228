@@ -1,5 +1,5 @@
 public class ArrayFullException extends Exception {
-    ArrayFullException(String message) {
-        super(message);
+    <E> ArrayFullException(E n) {
+        super("The array is full and " + n + " cannot be inserted.");
     }
 }

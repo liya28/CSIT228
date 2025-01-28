@@ -1,41 +1,39 @@
-public class MyArrayList {
-
+public class MyArrayList <E> {
     private static final int capacity = 5;
     private int _size;
-    private int[] array;
+    private E[] array;
     MyArrayList() {
         _size = 0;
-        array = new int[5];
+        array = (E[]) new Object[capacity];
     }
-
-    void add(int num) throws ArrayFullException {
+    void add(E n) throws ArrayFullException {
         try {
-            array[_size++] = num;
+            array[_size++] = n;
         } catch (Exception e) {
-            throw new ArrayFullException("Array is full");
+            throw new ArrayFullException(n);
         }
     }
-    void addAt(int num, int pos) throws InvalidPositionException, ArrayFullException {
+    void addAt(E n, int pos) throws InvalidPositionException, ArrayFullException {
         if (pos < 1 || pos - 1 > _size) {
-            throw new InvalidPositionException("Invalid position");
+            throw new InvalidPositionException(_size + 1);
         }
 
         if (_size >= capacity) {
-            throw new ArrayFullException("Puno na!");
+            throw new ArrayFullException(n);
         }
 
         for (int i = _size; i >= pos; i--) {
             array[i] = array[i - 1];
         }
 
-        array[pos - 1] = num;
+        array[pos - 1] = n;
 
         _size++;
     }
 
-    boolean remove(int num) {
+    boolean remove(E n) {
         for (int i = 0; i < _size; i++) {
-            if (array[i] == num) {
+            if (array[i] == n) {
                 for (int j = i; j < _size - 1; j++) {
                     array[j] = array[j + 1];
                 }
@@ -46,12 +44,12 @@ public class MyArrayList {
         return false;
     }
 
-    int removeAt(int pos) throws InvalidPositionException {
+    E removeAt(int pos) throws InvalidPositionException {
         if (pos < 1 || pos - 1 >= _size) {
-            throw new InvalidPositionException("Invalid position");
+            throw new InvalidPositionException(_size);
         }
 
-        int n = array[pos - 1];
+        E n = array[pos - 1];
         for (int i = pos - 1; i < _size - 1; i++) {
             array[i] = array[i + 1];
         }
@@ -61,9 +59,9 @@ public class MyArrayList {
         return n;
     }
 
-    boolean contains(int num) {
+    boolean contains(E n) {
         for (int i = 0; i < _size; i++) {
-            if (array[i] == num) {
+            if (array[i] == n) {
                 return true;
             }
         }
@@ -78,20 +76,25 @@ public class MyArrayList {
         return _size == 0;
     }
 
-    int get(int pos) throws InvalidPositionException {
+    E get(int pos) throws InvalidPositionException {
         if (pos < 1 || pos > _size) {
-            throw new InvalidPositionException("Invalid position");
+            throw new InvalidPositionException(_size);
         }
 
         return array[pos - 1];
     }
 
-    int set(int pos, int num) throws InvalidPositionException {
+    E set(int pos, E n) throws InvalidPositionException {
         if (pos < 1 || pos - 1 >= _size) {
-            throw new InvalidPositionException("Invalid position");
+            throw new InvalidPositionException(_size);
         }
-        int n = array[pos - 1];
-        array[pos - 1] = num;
-        return n;
+        E e = array[pos - 1];
+        array[pos - 1] = n;
+        return e;
+    }
+    <A, C> void print(A a, C c) {
+        for (int i = 0; i < _size; i++) {
+            System.out.println(a + " " + array[i] + " " + c);
+        }
     }
 }
